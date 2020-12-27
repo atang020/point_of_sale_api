@@ -3,7 +3,7 @@ var router = express.Router();
 
 var MongoClient = require('mongodb').MongoClient
 
-MongoClient.connect('mongodb://localhost:27017/orders', function (err, client) {
+MongoClient.connect('mongodb://localhost:27017', function (err, client) {
   if (err) throw err
 
   var db = client.db('main')
@@ -29,11 +29,10 @@ MongoClient.connect('mongodb://localhost:27017/orders', function (err, client) {
   });
 
   router.post('/', function(req, res, next) {
-    const params = req.params;
-    if (params) {
+    const body = req.body;
+    body.completedOrder = false;
 
-    }
-    const result = menuCollection.insertOne(req.body).then(results => {
+    const result = menuCollection.insertOne(body).then(results => {
         res.status(200).send(results);
       });
   });
